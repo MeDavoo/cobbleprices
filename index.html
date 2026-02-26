@@ -49,7 +49,7 @@
     <div class="pagination" id="pagination"></div>
 
     <div class="panel-footer">
-      ⛏ prices set by the server admin &nbsp;·&nbsp; currency: ₽ rubles
+      For fun, cobblegamers &nbsp;·&nbsp; currency: ₽ cobbledollars
     </div>
   </div>
 </div>
@@ -94,14 +94,14 @@ function makeImgEl(itemId) {
         const wiki = name.split('_').map(w => w[0].toUpperCase() + w.slice(1)).join('_');
         el.src = `https://minecraft.wiki/images/Invicon_${wiki}.png`;
       } else {
-        el.outerHTML = '<div class="item-icon-fallback">◻</div>';
+        el.outerHTML = '<div class="item-icon-fallback">📦</div>';
       }
     };
   } else {
     // cobblemon / lumymon
     el.src = `https://mc.nbs.gg/items/${ns}/${name}.png`;
     el.onerror = function() {
-      el.outerHTML = '<div class="item-icon-fallback">◻</div>';
+      el.outerHTML = '<div class="item-icon-fallback">📦</div>';
     };
   }
   return el;
