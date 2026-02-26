@@ -106,6 +106,7 @@ function makeImgEl(itemId) {
     el.onerror = function() {
       tries++;
       if (tries === 1) {
+        // Proper capitalization for wiki URLs: Block_of_Iron instead of block_of_iron
         const wiki = textureName.split('_').map(w => w[0].toUpperCase() + w.slice(1)).join('_');
         el.src = `https://minecraft.wiki/images/Invicon_${wiki}.png`;
       } else {
