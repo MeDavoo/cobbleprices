@@ -98,14 +98,19 @@ function makeImgEl(itemId) {
     let textureName = name;
     if (name.includes('_block')) {
       const baseName = name.replace('_block', '');
+      // For GitHub assets, use lowercase; for wiki fallback, we'll handle in onerror
       textureName = `block_of_${baseName}`;
     }
     
+    // Try item textures first, then block textures, then wiki
     el.src = `https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/${textureName}.png`;
     let tries = 0;
     el.onerror = function() {
       tries++;
       if (tries === 1) {
+        // Try block textures folder
+        el.src = `https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/block/${name}.png`;
+      } else if (tries === 2) {
         // Proper capitalization for wiki URLs: Block_of_Iron instead of block_of_iron
         const wiki = textureName.split('_').map(w => w[0].toUpperCase() + w.slice(1)).join('_');
         el.src = `https://minecraft.wiki/images/Invicon_${wiki}.png`;
