@@ -157,17 +157,42 @@ body::before {
   box-shadow: 0 0 0 2px rgba(245,200,66,0.18), inset 0 0 10px rgba(245,200,66,0.04);
 }
 
-/* ── FILTER TABS ── */
+/* ── MAIN CONTENT ── */
+.main-content {
+  width: 100%;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* ── FILTER SIDEBAR ── */
+.filter-sidebar {
+  flex-shrink: 0;
+  width: 200px;
+}
+
+.filter-title {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
 .filter-tabs {
   display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+  flex-direction: column;
+  gap: 4px;
 }
+
 .tab {
   font-family: 'VT323', monospace;
   font-size: 16px;
-  padding: 4px 11px;
+  padding: 6px 10px;
   background: rgba(0,0,0,0.45);
   border: 2px solid #5a3510;
   border-bottom-color: var(--wood-light);
@@ -177,6 +202,7 @@ body::before {
   transition: all 0.1s;
   user-select: none;
   letter-spacing: 0.3px;
+  text-align: left;
 }
 .tab:hover { color: var(--parchment); background: rgba(100,60,20,0.5); }
 .tab.active {
@@ -186,6 +212,12 @@ body::before {
   border-bottom-color: #6a3800;
   border-right-color: #6a3800;
   color: #1a0e04;
+}
+
+/* ── ITEMS SECTION ── */
+.items-section {
+  flex: 1;
+  min-width: 0;
 }
 
 /* ── STATS BAR ── */

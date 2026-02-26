@@ -18,35 +18,43 @@
   <div class="panel">
 
     <div class="shop-title">
-      <h1>⚔ VILLAGE SHOP ⚔<br>PRICE REGISTRY</h1>
-      <div class="title-divider"><span>🪙</span></div>
+      <h1>⭐ COBBLEGAMERS ⭐<br>SELL PRICES</h1>
+      <div class="title-divider"><span></span></div>
     </div>
 
-    <div class="search-wrap">
-      <input type="text" id="search" placeholder="Search items..." autocomplete="off" spellcheck="false">
-    </div>
+    <div class="main-content">
+      <div class="search-wrap">
+        <input type="text" id="search" placeholder="Search items..." autocomplete="off" spellcheck="false">
+      </div>
 
-    <div class="filter-tabs" id="filterTabs">
-      <div class="tab active" data-filter="all">All</div>
-      <div class="tab" data-filter="cobblemon">Cobblemon</div>
-      <div class="tab" data-filter="lumymon">Lumymon</div>
-      <div class="tab" data-filter="berry">Berries</div>
-      <div class="tab" data-filter="potion">Potions</div>
-      <div class="tab" data-filter="evolution">Evolution</div>
-      <div class="tab" data-filter="food">Food</div>
-      <div class="tab" data-filter="ore">Ores</div>
-      <div class="tab" data-filter="tool">Tools</div>
-      <div class="tab" data-filter="armor">Armor</div>
-    </div>
+      <div class="content-wrapper">
+        <div class="filter-sidebar">
+          <div class="filter-title">Categories</div>
+          <div class="filter-tabs" id="filterTabs">
+            <div class="tab active" data-filter="all">All</div>
+            <div class="tab" data-filter="vanilla">Vanilla</div>
+            <div class="tab" data-filter="cobblemon">Cobblemon</div>
+            <div class="tab" data-filter="berry">Berries</div>
+            <div class="tab" data-filter="health">Health Items</div>
+            <div class="tab" data-filter="evolution">Evolutions & Held Items</div>
+            <div class="tab" data-filter="food">Food</div>
+            <div class="tab" data-filter="ore">Ores</div>
+            <div class="tab" data-filter="armor_tools">Armor & Tools</div>
+          </div>
+        </div>
 
-    <div class="stats-bar">
-      <div id="statsText">Loading...</div>
-    </div>
+        <div class="items-section">
+          <div class="stats-bar">
+            <div id="statsText">Loading...</div>
+          </div>
 
-    <div class="item-list" id="itemList">
-      <div class="no-results"><div class="icon">⏳</div>Loading prices...</div>
+          <div class="item-list" id="itemList">
+            <div class="no-results"><div class="icon">⏳</div>Loading prices...</div>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
     </div>
-    <div class="pagination" id="pagination"></div>
 
     <div class="panel-footer">
       For fun, cobblegamers &nbsp;·&nbsp; currency: ₽ cobbledollars
@@ -86,12 +94,19 @@ function makeImgEl(itemId) {
   el.alt = name;
 
   if (ns === 'minecraft') {
-    el.src = `https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/${name}.png`;
+    // Handle block naming (e.g., emerald_block -> block_of_emerald)
+    let textureName = name;
+    if (name.includes('_block')) {
+      const baseName = name.replace('_block', '');
+      textureName = `block_of_${baseName}`;
+    }
+    
+    el.src = `https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/${textureName}.png`;
     let tries = 0;
     el.onerror = function() {
       tries++;
       if (tries === 1) {
-        const wiki = name.split('_').map(w => w[0].toUpperCase() + w.slice(1)).join('_');
+        const wiki = textureName.split('_').map(w => w[0].toUpperCase() + w.slice(1)).join('_');
         el.src = `https://minecraft.wiki/images/Invicon_${wiki}.png`;
       } else {
         el.outerHTML = '<div class="item-icon-fallback">📦</div>';
@@ -121,16 +136,15 @@ function nsBadge(ns) {
 function matchFilter(item, f) {
   const [ns, name] = item.item.split(':');
   switch(f) {
-    case 'all':       return true;
+    case 'all': return true;
+    case 'vanilla': return ns === 'minecraft';
     case 'cobblemon': return ns === 'cobblemon' || ns === 'lumymon';
-    case 'lumymon':   return ns === 'lumymon';
-    case 'berry':     return name.includes('berry');
-    case 'potion':    return ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
+    case 'berry': return name.includes('berry');
+    case 'health': return ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
     case 'evolution': return ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
-    case 'food':      return ns === 'cobblemon' && ['cookie','cake','curry','muffin','mochi','sandwich','stew','milk','tea','galette','malasada','crunchies','bar','candy','ponigiri','gateau','dip','tail','bait','snack','leek','moomoo','sinister','pewter','rage','lava','lumiose','casteliac','potato_m','open_faced','tasty','vivichoke','roasted','jubilife','big_m'].some(k => name.includes(k));
-    case 'ore':       return ns === 'minecraft' && ['_ore','debris','_ingot','_nugget','raw_iron','raw_gold','raw_copper','diamond','emerald','coal','quartz','lapis','netherite'].some(k => name.includes(k));
-    case 'tool':      return ['sword','pickaxe','_axe','shovel','_hoe','bow','crossbow','trident','fishing_rod','shears'].some(k => name.includes(k));
-    case 'armor':     return ['helmet','chestplate','leggings','boots','shield','elytra','turtle_helmet'].some(k => name.includes(k));
+    case 'food': return ['apple','bread','cake','cookie','pumpkin_pie','cooked','beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical','pufferfish','rotten_flesh','spider_eye','carrot','potato','baked_potato','poisonous','golden_apple','golden_carrot','melon_slice','dried_kelp','beetroot','beetroot_soup','mushroom_stew','suspicious_stew','rabbit_stew'].some(k => name.includes(k));
+    case 'ore': return ns === 'minecraft' && ['_ore','debris','_ingot','_nugget','raw_iron','raw_gold','raw_copper','diamond','emerald','coal','quartz','lapis','netherite','_block'].some(k => name.includes(k));
+    case 'armor_tools': return ['sword','pickaxe','_axe','shovel','_hoe','bow','crossbow','trident','fishing_rod','shears','helmet','chestplate','leggings','boots','shield','elytra','turtle_helmet'].some(k => name.includes(k));
     default: return true;
   }
 }
