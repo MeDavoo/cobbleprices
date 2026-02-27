@@ -220,6 +220,41 @@ body::before {
   min-width: 0;
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+}
+
+.sort-btn {
+  font-family: 'VT323', monospace;
+  font-size: 15px;
+  padding: 4px 10px;
+  background: rgba(0,0,0,0.45);
+  border: 2px solid #5a3510;
+  border-bottom-color: var(--wood-light);
+  border-right-color: var(--wood-light);
+  color: var(--parchment);
+  cursor: pointer;
+  transition: all 0.1s;
+  user-select: none;
+  letter-spacing: 0.3px;
+}
+.sort-btn:hover {
+  background: rgba(100,60,20,0.5);
+  color: var(--gold);
+}
+.sort-btn:active {
+  transform: translateY(1px);
+}
+
 /* ── STATS BAR ── */
 .stats-bar {
   display: flex;

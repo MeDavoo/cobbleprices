@@ -44,8 +44,13 @@
         </div>
 
         <div class="items-section">
-          <div class="stats-bar">
-            <div id="statsText">Loading...</div>
+          <div class="section-header">
+            <div class="stats-bar">
+              <div id="statsText">Loading...</div>
+            </div>
+            <div class="sort-controls">
+              <button id="sortBtn" class="sort-btn">Sort by Price ↓</button>
+            </div>
           </div>
 
           <div class="item-list" id="itemList">
@@ -67,6 +72,7 @@
 const PER_PAGE = 30;
 let BANK = [];
 let page = 1, filter = 'all', query = '';
+let sortOrder = 'desc'; // 'asc' or 'desc'
 
 // ── LOAD bank.json ──
 // This just fetches the bank.json sitting next to this file.
@@ -94,6 +100,15 @@ function makeImgEl(itemId) {
   el.alt = name;
 
   if (ns === 'minecraft') {
+    // Handle special cases first
+    if (name === 'redstone_wire') {
+      el.src = 'https://minecraft.wiki/images/Invicon_Redstone.png';
+      el.onerror = function() {
+        el.outerHTML = '<div class="item-icon-fallback">📦</div>';
+      };
+      return el;
+    }
+    
     // Handle block naming (e.g., emerald_block -> block_of_emerald)
     let textureName = name;
     if (name.includes('_block')) {
@@ -121,8 +136,45 @@ function makeImgEl(itemId) {
   } else {
     // cobblemon / lumymon
     el.src = `https://mc.nbs.gg/items/${ns}/${name}.png`;
+    let tries = 0;
     el.onerror = function() {
-      el.outerHTML = '<div class="item-icon-fallback">📦</div>';
+      tries++;
+      if (tries === 1) {
+        // Special cases for relic coin items
+        if (name === 'relic_coin_sack') {
+          el.src = 'https://wiki.cobblemon.com/images/a/a7/Relic_Coin_Sack_%28block%29.png';
+        } else if (name === 'relic_coin_pouch') {
+          el.src = 'https://wiki.cobblemon.com/images/1/18/Relic_Coin_Pouch.png';
+        } else if (name === 'relic_coin') {
+          el.src = 'https://wiki.cobblemon.com/images/1/15/Relic_Coin.png';
+        } else {
+          // Try Serebii item sprites for berries and items
+          if (name.includes('berry')) {
+            const berryName = name.replace('_berry', '').toLowerCase();
+            el.src = `https://www.serebii.net/itemdex/sprites/${berryName}berry.png`;
+          } else {
+            // Try Serebii item sprites for other items
+            const itemName = name.replace(/_/g, '').toLowerCase();
+            el.src = `https://www.serebii.net/itemdex/sprites/${itemName}.png`;
+          }
+        }
+      } else if (tries === 2) {
+        // Try PokeAPI berries for berry items
+        if (name.includes('berry')) {
+          const berryName = name.replace('_berry', '').replace(/_/g, '-').toLowerCase();
+          el.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/berries/${berryName}-berry.png`;
+        } else {
+          // Try PokeAPI sprites for other items/pokemon
+          const itemName = name.replace(/_/g, '-').toLowerCase();
+          el.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${itemName}.png`;
+        }
+      } else if (tries === 3) {
+        // Try generic item sprites
+        const itemName = name.replace(/_/g, '-').toLowerCase();
+        el.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${itemName}.png`;
+      } else {
+        el.outerHTML = '<div class="item-icon-fallback">📦</div>';
+      }
     };
   }
   return el;
@@ -145,11 +197,11 @@ function matchFilter(item, f) {
     case 'all': return true;
     case 'vanilla': return ns === 'minecraft';
     case 'cobblemon': return ns === 'cobblemon' || ns === 'lumymon';
-    case 'berry': return name.includes('berry');
-    case 'health': return ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
-    case 'evolution': return ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
+    case 'berry': return name.includes('berry') && !['candied_berry','berry_sweet','strawberry_sweet'].some(k => name.includes(k));
+    case 'health': return (ns === 'cobblemon' || ns === 'lumymon') && ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
+    case 'evolution': return (ns === 'cobblemon' || ns === 'lumymon') && ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
     case 'food': return ['apple','bread','cake','cookie','pumpkin_pie','cooked','beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical','pufferfish','rotten_flesh','spider_eye','carrot','potato','baked_potato','poisonous','golden_apple','golden_carrot','melon_slice','dried_kelp','beetroot','beetroot_soup','mushroom_stew','suspicious_stew','rabbit_stew'].some(k => name.includes(k));
-    case 'ore': return ns === 'minecraft' && ['_ore','debris','_ingot','_nugget','raw_iron','raw_gold','raw_copper','diamond','emerald','coal','quartz','lapis','netherite','_block'].some(k => name.includes(k));
+    case 'ore': return ns === 'minecraft' && ['_ore','debris','_ingot','_nugget','raw_iron','raw_gold','raw_copper','diamond','emerald','coal','quartz','lapis','redstone','netherite'].some(k => name.includes(k)) && !['stairs','slab','wall','fence','gate','brick','pillar','chiseled','polished','cut','smooth','tile','block','torch','lamp','horse_armor'].some(k => name.includes(k));
     case 'armor_tools': return ['sword','pickaxe','_axe','shovel','_hoe','bow','crossbow','trident','fishing_rod','shears','helmet','chestplate','leggings','boots','shield','elytra','turtle_helmet'].some(k => name.includes(k));
     default: return true;
   }
@@ -157,10 +209,17 @@ function matchFilter(item, f) {
 
 function getFiltered() {
   const q = query.toLowerCase();
-  return BANK.filter(item => {
+  let filtered = BANK.filter(item => {
     const nameMatch = !q || item.item.toLowerCase().includes(q) || formatName(item.item).toLowerCase().includes(q);
     return nameMatch && matchFilter(item, filter);
   });
+  
+  // Sort by price
+  filtered.sort((a, b) => {
+    return sortOrder === 'desc' ? b.price - a.price : a.price - b.price;
+  });
+  
+  return filtered;
 }
 
 // ── RENDER ──
@@ -192,7 +251,7 @@ function render() {
       const nameEl = document.createElement('span');
       nameEl.className = 'item-name';
       const badge = nsBadge(getNs(item.item));
-      nameEl.innerHTML = formatName(item.item) + (badge ? ` <span class="ns-badge">${badge}</span>` : '');
+      nameEl.innerHTML = formatName(item.item);
 
       const priceEl = document.createElement('span');
       priceEl.className = 'item-price';
@@ -251,12 +310,21 @@ document.getElementById('search').addEventListener('input', e => {
   page = 1;
   render();
 });
+
 document.getElementById('filterTabs').addEventListener('click', e => {
   const tab = e.target.closest('.tab');
   if (!tab) return;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
   filter = tab.dataset.filter;
+  page = 1;
+  render();
+});
+
+document.getElementById('sortBtn').addEventListener('click', () => {
+  sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+  const btn = document.getElementById('sortBtn');
+  btn.textContent = `Sort by Price ${sortOrder === 'desc' ? '↓' : '↑'}`;
   page = 1;
   render();
 });
