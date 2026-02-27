@@ -273,17 +273,30 @@ function render() {
       row.addEventListener('mouseenter', (e) => {
         const tooltip = document.getElementById('itemTooltip');
         const tooltipImage = document.getElementById('tooltipImage');
+        const tooltipText = document.querySelector('.tooltip-text');
         const imgEl = row.querySelector('.item-icon, .item-icon-fallback');
         
         if (imgEl && imgEl.tagName === 'IMG') {
           tooltipImage.src = imgEl.src;
           tooltipImage.alt = imgEl.alt;
+          tooltipImage.style.display = 'block';
+          tooltipText.style.display = 'block';
+          tooltip.classList.add('show');
+        } else {
+          // No image - just show question mark
+          tooltipImage.style.display = 'none';
+          tooltipText.style.display = 'block';
           tooltip.classList.add('show');
         }
       });
       
       row.addEventListener('mouseleave', () => {
         const tooltip = document.getElementById('itemTooltip');
+        const tooltipImage = document.getElementById('tooltipImage');
+        const tooltipText = document.querySelector('.tooltip-text');
+        
+        tooltipImage.style.display = 'none';
+        tooltipText.style.display = 'none';
         tooltip.classList.remove('show');
       });
       

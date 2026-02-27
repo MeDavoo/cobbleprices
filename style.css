@@ -341,6 +341,7 @@ body::before {
   color: var(--gold);
   text-align: center;
   margin-top: 8px;
+  display: none;
 }
 
 /* ── PAGE LOAD ANIMATIONS ── */
