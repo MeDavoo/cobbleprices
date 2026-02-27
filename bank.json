@@ -1,7 +1,7 @@
 {
   "bank": [
-    {"item": "minecraft:emerald", "price": 20},
-    {"item": "minecraft:emerald_block", "price": 200},
+    {"item": "minecraft:emerald", "price": 40},
+    {"item": "minecraft:emerald_block", "price": 360},
     {"item": "cobblemon:oran_berry", "price": 10},
     {"item": "cobblemon:cheri_berry", "price": 10},
     {"item": "cobblemon:chesto_berry", "price": 10},
