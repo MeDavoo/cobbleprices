@@ -277,13 +277,14 @@ function render() {
         const imgEl = row.querySelector('.item-icon, .item-icon-fallback');
         
         if (imgEl && imgEl.tagName === 'IMG') {
+          // Has image - show only the image
           tooltipImage.src = imgEl.src;
           tooltipImage.alt = imgEl.alt;
           tooltipImage.style.display = 'block';
-          tooltipText.style.display = 'block';
+          tooltipText.style.display = 'none';
           tooltip.classList.add('show');
         } else {
-          // No image - just show question mark
+          // No image - show only question mark
           tooltipImage.style.display = 'none';
           tooltipText.style.display = 'block';
           tooltip.classList.add('show');
