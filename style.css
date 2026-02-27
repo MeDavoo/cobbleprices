@@ -335,6 +335,14 @@ body::before {
   image-rendering: crisp-edges;
 }
 
+.tooltip-text {
+  font-family: 'VT323', monospace;
+  font-size: 32px;
+  color: var(--gold);
+  text-align: center;
+  margin-top: 8px;
+}
+
 /* ── PAGE LOAD ANIMATIONS ── */
 .item-row {
   opacity: 0;
