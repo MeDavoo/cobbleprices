@@ -554,3 +554,68 @@ body::before {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #150b02; }
 ::-webkit-scrollbar-thumb { background: var(--wood-mid); border-radius: 2px; }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .filter-sidebar {
+    width: 100%;
+    order: -1; /* Places categories above the table */
+  }
+  
+  .filter-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+  
+  .tab {
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 6px;
+  }
+  
+  .shop-villager {
+    display: none; /* Hide villager image on mobile to save space */
+  }
+  
+  .filter-title {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  
+  .items-section {
+    width: 100%;
+  }
+  
+  .item-row {
+    grid-template-columns: 24px 24px 1fr auto;
+    gap: 6px;
+    padding: 4px 6px;
+  }
+  
+  .item-name {
+    font-size: 16px;
+  }
+  
+  .item-price {
+    font-size: 7px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  
+  .sort-controls {
+    justify-content: center;
+  }
+}
