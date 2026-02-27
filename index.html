@@ -11,16 +11,19 @@
 <div class="page-wrapper">
 
   <div class="shop-header">
-    <!-- Just a normal image tag — swap shop.png with any image you want -->
-    <img src="shop.png" alt="Village Shop">
   </div>
 
   <div class="panel">
 
-    <div class="shop-title">
-      <h1>⭐ COBBLEGAMERS ⭐<br>SELL PRICES</h1>
-      <div class="title-divider"><span></span></div>
-    </div>
+      <div class="shop-title">
+        <h1>⭐ COBBLEGAMERS ⭐<br>SELL PRICES</h1>
+        <div class="title-divider"><span></span></div>
+      </div>
+
+      <!-- Item hover tooltip -->
+      <div id="itemTooltip" class="item-tooltip">
+        <img id="tooltipImage" src="" alt="">
+      </div>
 
     <div class="main-content">
       <div class="search-wrap">
@@ -40,6 +43,9 @@
             <div class="tab" data-filter="food">Food</div>
             <div class="tab" data-filter="ore">Ores</div>
             <div class="tab" data-filter="armor_tools">Armor & Tools</div>
+          </div>
+          <div class="shop-villager">
+            <img src="shop.png" alt="Shop Villager">
           </div>
         </div>
 
@@ -261,6 +267,25 @@ function render() {
       row.appendChild(makeImgEl(item.item));
       row.appendChild(nameEl);
       row.appendChild(priceEl);
+      
+      // Add hover events for tooltip
+      row.addEventListener('mouseenter', (e) => {
+        const tooltip = document.getElementById('itemTooltip');
+        const tooltipImage = document.getElementById('tooltipImage');
+        const imgEl = row.querySelector('.item-icon, .item-icon-fallback');
+        
+        if (imgEl && imgEl.tagName === 'IMG') {
+          tooltipImage.src = imgEl.src;
+          tooltipImage.alt = imgEl.alt;
+          tooltip.classList.add('show');
+        }
+      });
+      
+      row.addEventListener('mouseleave', () => {
+        const tooltip = document.getElementById('itemTooltip');
+        tooltip.classList.remove('show');
+      });
+      
       listEl.appendChild(row);
     });
   }
@@ -308,7 +333,17 @@ function renderPagination(totalPages) {
 document.getElementById('search').addEventListener('input', e => {
   query = e.target.value;
   page = 1;
+  
+  // Add searching class for animation
+  const listEl = document.getElementById('itemList');
+  listEl.classList.add('searching');
+  
   render();
+  
+  // Remove searching class after animation
+  setTimeout(() => {
+    listEl.classList.remove('searching');
+  }, 1000);
 });
 
 document.getElementById('filterTabs').addEventListener('click', e => {
