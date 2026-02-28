@@ -283,6 +283,29 @@ function makeImgEl(itemId) {
   const el = document.createElement('img');
   el.className = 'item-icon';
   el.alt = name;
+  
+  // Special handling for gacha coins
+  if (name === 'gacha_coin_7') {
+    el.src = 'gacha coin blue.png';
+    el.onerror = function() {
+      el.outerHTML = '<div class="item-icon-fallback">🔵</div>';
+    };
+    return el;
+  }
+  if (name === 'gacha_coin') {
+    el.src = 'gacha coin red.png';
+    el.onerror = function() {
+      el.outerHTML = '<div class="item-icon-fallback">🔴</div>';
+    };
+    return el;
+  }
+  if (name === 'gacha_coin_4') {
+    el.src = 'gacha coin rainbow.png';
+    el.onerror = function() {
+      el.outerHTML = '<div class="item-icon-fallback">🌈</div>';
+    };
+    return el;
+  }
 
   if (ns === 'minecraft') {
     // Handle special cases first
@@ -367,7 +390,14 @@ function makeImgEl(itemId) {
 
 // ── HELPERS ──
 function formatName(itemId) {
-  return itemId.split(':')[1].replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const baseName = itemId.split(':')[1].replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  
+  // Rename gacha coins for display
+  if (baseName === 'Gacha Coin 7') return 'Blue Gacha Coin';
+  if (baseName === 'Gacha Coin') return 'Red Gacha Coin';
+  if (baseName === 'Gacha Coin 4') return 'Rainbow Gacha Coin';
+  
+  return baseName;
 }
 function getNs(itemId) { return itemId.split(':')[0]; }
 function nsBadge(ns) {
