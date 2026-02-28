@@ -200,15 +200,6 @@
           <div class="filter-sidebar">
             <div class="filter-title">Categories</div>
             <div class="filter-tabs" id="filterTabs">
-              <div class="tab active" data-filter="all">All</div>
-              <div class="tab" data-filter="vanilla">Vanilla</div>
-              <div class="tab" data-filter="cobblemon">Cobblemon</div>
-              <div class="tab" data-filter="berry">Berries</div>
-              <div class="tab" data-filter="health">Health Items</div>
-              <div class="tab" data-filter="evolution">Evolutions & Held Items</div>
-              <div class="tab" data-filter="food">Food</div>
-              <div class="tab" data-filter="ore">Ores</div>
-              <div class="tab" data-filter="armor_tools">Armor & Tools</div>
             </div>
             <div class="shop-villager">
               <img src="shop.png" alt="Shop Villager">
@@ -266,6 +257,7 @@ Promise.all([
   BANK = bankData.bank;
   DEFAULT_SHOP = shopData.defaultShop;
   
+  updateCategories('sell');
   render();
 })
 .catch(err => {
@@ -489,6 +481,7 @@ function matchFilter(item, f) {
     case 'all': return true;
     case 'vanilla': return ns === 'minecraft';
     case 'cobblemon': return ns === 'cobblemon' || ns === 'lumymon';
+    case 'ball': return (ns === 'cobblemon' || ns === 'lumymon') && name.endsWith('_ball');
     case 'berry': return name.includes('berry') && !['candied_berry','berry_sweet','strawberry_sweet'].some(k => name.includes(k));
     case 'health': return (ns === 'cobblemon' || ns === 'lumymon') && ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
     case 'evolution': return (ns === 'cobblemon' || ns === 'lumymon') && ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
