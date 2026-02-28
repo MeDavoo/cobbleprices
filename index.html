@@ -9,6 +9,11 @@
 <body>
 
 <div class="page-wrapper">
+  <!-- Main Navigation Tabs (Outside Container) -->
+  <div class="main-nav-outside">
+    <button class="main-tab-outside active" data-section="shop">Shop</button>
+    <button class="main-tab-outside" data-section="gacha">Gacha</button>
+  </div>
 
   <div class="shop-header">
   </div>
@@ -16,54 +21,215 @@
   <div class="panel">
 
       <div class="shop-title">
-        <h1>⭐ COBBLEGAMERS ⭐<br>SELL PRICES</h1>
+        <h1 id="mainTitle">COBBLEGAMERS<br>SELL PRICES</h1>
         <div class="title-divider"><span></span></div>
       </div>
 
-      <!-- Item hover tooltip -->
-      <div id="itemTooltip" class="item-tooltip">
-        <img id="tooltipImage" src="" alt="">
-        <div class="tooltip-text">?</div>
+      <!-- Shop Section -->
+      <div id="shopSection" class="section-content active">
+        <!-- Shop Sub-tabs -->
+        <div class="shop-tabs">
+          <button id="buyPricesTab" class="shop-tab" data-mode="buy">Buy Prices</button>
+          <button id="sellPricesTab" class="shop-tab active" data-mode="sell">Sell Prices</button>
+        </div>
+
+        <!-- Item hover tooltip -->
+        <div id="itemTooltip" class="item-tooltip">
+          <img id="tooltipImage" src="" alt="">
+          <div class="tooltip-text">?</div>
+        </div>
       </div>
 
-    <div class="main-content">
-      <div class="search-wrap">
-        <input type="text" id="search" placeholder="Search items..." autocomplete="off" spellcheck="false">
-      </div>
-
-      <div class="content-wrapper">
-        <div class="filter-sidebar">
-          <div class="filter-title">Categories</div>
-          <div class="filter-tabs" id="filterTabs">
-            <div class="tab active" data-filter="all">All</div>
-            <div class="tab" data-filter="vanilla">Vanilla</div>
-            <div class="tab" data-filter="cobblemon">Cobblemon</div>
-            <div class="tab" data-filter="berry">Berries</div>
-            <div class="tab" data-filter="health">Health Items</div>
-            <div class="tab" data-filter="evolution">Evolutions & Held Items</div>
-            <div class="tab" data-filter="food">Food</div>
-            <div class="tab" data-filter="ore">Ores</div>
-            <div class="tab" data-filter="armor_tools">Armor & Tools</div>
+      <!-- Gacha Section -->
+      <div id="gachaSection" class="section-content">
+        <!-- Gacha Main Tabs -->
+        <div class="gacha-main-tabs">
+          <button class="gacha-main-tab active" data-gacha="pokedoll">
+            <img src="gacha coin blue.png" alt="Blue Coin" class="gacha-tab-icon">
+            Pokedoll Gacha
+          </button>
+          <button class="gacha-main-tab" data-gacha="item">
+            <img src="gacha coin red.png" alt="Red Coin" class="gacha-tab-icon">
+            Item Gacha
+          </button>
+          <button class="gacha-main-tab" data-gacha="spawn">
+            <img src="gacha coin rainbow.png" alt="Rainbow Coin" class="gacha-tab-icon">
+            Spawn Gacha
+          </button>
+        </div>
+        
+        <!-- Dynamic Gacha Header -->
+        <div class="gacha-header">
+          <h2 id="gachaTitle">🎰 Gacha Center</h2>
+          <p id="gachaDescription">Try your luck with our gacha system!</p>
+        </div>
+        
+        <!-- Pokedoll Gacha Content -->
+        <div id="pokedollGacha" class="gacha-content active">
+          <!-- Collection Counter -->
+          <div class="collection-header">
+            <div class="collection-counter">
+              <span id="collectionCounter">Loading...</span>
+            </div>
           </div>
-          <div class="shop-villager">
-            <img src="shop.png" alt="Shop Villager">
+          
+          <!-- Pokedoll Rarity Tabs -->
+          <div class="gacha-rarity-tabs">
+            <button class="rarity-tab active" data-rarity="1">
+              <span class="rarity-name">Normal</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-1"></div>
+              </div>
+              <span class="rarity-stats" id="stats-1">0/0</span>
+            </button>
+            <button class="rarity-tab" data-rarity="2">
+              <span class="rarity-name">Gigantic</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-2"></div>
+              </div>
+              <span class="rarity-stats" id="stats-2">0/0</span>
+            </button>
+            <button class="rarity-tab" data-rarity="3">
+              <span class="rarity-name">Shiny</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-3"></div>
+              </div>
+              <span class="rarity-stats" id="stats-3">0/0</span>
+            </button>
+            <button class="rarity-tab" data-rarity="4">
+              <span class="rarity-name">Gigantic Shiny</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-4"></div>
+              </div>
+              <span class="rarity-stats" id="stats-4">0/0</span>
+            </button>
+          </div>
+          
+          <!-- Search Bar -->
+          <div class="gacha-search-wrap">
+            <input type="text" id="gachaSearch" placeholder="Search Pokemon..." autocomplete="off" spellcheck="false">
+          </div>
+          
+          <!-- Pokedoll Items List -->
+          <div class="gacha-items">
+            <div class="gacha-grid collection-grid" id="pokedollGrid">
+            </div>
           </div>
         </div>
 
-        <div class="items-section">
-          <div class="section-header">
-            <div class="stats-bar">
-              <div id="statsText">Loading...</div>
+        <!-- Item Gacha Content -->
+        <div id="itemGacha" class="gacha-content">
+          <!-- Search Bar -->
+          <div class="gacha-search-wrap">
+            <input type="text" id="itemGachaSearch" placeholder="Search items..." autocomplete="off" spellcheck="false">
+          </div>
+          
+          <!-- Item Rarity Tabs -->
+          <div class="gacha-rarity-tabs">
+            <button class="rarity-tab active" data-rarity="pokeball">
+              <span class="rarity-name">Pokeball</span>
+            </button>
+            <button class="rarity-tab" data-rarity="greatball">
+              <span class="rarity-name">Greatball</span>
+            </button>
+            <button class="rarity-tab" data-rarity="ultraball">
+              <span class="rarity-name">Ultraball</span>
+            </button>
+          </div>
+          
+          <!-- Items Table -->
+          <div class="gacha-items">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody id="itemsTableBody">
+                <!-- Items will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Spawn Gacha Content -->
+        <div id="spawnGacha" class="gacha-content">
+          <!-- Search Bar -->
+          <div class="gacha-search-wrap">
+            <input type="text" id="spawnGachaSearch" placeholder="Search Pokémon..." autocomplete="off" spellcheck="false">
+          </div>
+          
+          <!-- Spawn Rarity Tabs -->
+          <div class="gacha-rarity-tabs">
+            <button class="rarity-tab active" data-rarity="common">
+              <span class="rarity-name">Common</span>
+            </button>
+            <button class="rarity-tab" data-rarity="uncommon">
+              <span class="rarity-name">Uncommon</span>
+            </button>
+            <button class="rarity-tab" data-rarity="rare">
+              <span class="rarity-name">Rare</span>
+            </button>
+            <button class="rarity-tab" data-rarity="ultra_rare">
+              <span class="rarity-name">Ultra Rare</span>
+            </button>
+            <button class="rarity-tab" data-rarity="legendary">
+              <span class="rarity-name">Legendary</span>
+            </button>
+          </div>
+          
+          <!-- Spawn Grid -->
+          <div class="gacha-items">
+            <div class="gacha-grid collection-grid" id="spawnGrid">
             </div>
-            <div class="sort-controls">
-              <button id="sortBtn" class="sort-btn">Sort by Price ↓</button>
+          </div>
+        </div>
+
+      </div><!-- end gachaSection -->
+
+    <div class="main-content">
+      <!-- Shop Content -->
+      <div id="shopContent" class="content-area active">
+        <div class="search-wrap">
+          <input type="text" id="search" placeholder="Search items..." autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="content-wrapper">
+          <div class="filter-sidebar">
+            <div class="filter-title">Categories</div>
+            <div class="filter-tabs" id="filterTabs">
+              <div class="tab active" data-filter="all">All</div>
+              <div class="tab" data-filter="vanilla">Vanilla</div>
+              <div class="tab" data-filter="cobblemon">Cobblemon</div>
+              <div class="tab" data-filter="berry">Berries</div>
+              <div class="tab" data-filter="health">Health Items</div>
+              <div class="tab" data-filter="evolution">Evolutions & Held Items</div>
+              <div class="tab" data-filter="food">Food</div>
+              <div class="tab" data-filter="ore">Ores</div>
+              <div class="tab" data-filter="armor_tools">Armor & Tools</div>
+            </div>
+            <div class="shop-villager">
+              <img src="shop.png" alt="Shop Villager">
             </div>
           </div>
 
-          <div class="item-list" id="itemList">
-            <div class="no-results"><div class="icon">⏳</div>Loading prices...</div>
+          <div class="items-section">
+            <div class="section-header">
+              <div class="stats-bar">
+                <div id="statsText">Loading...</div>
+              </div>
+              <div class="sort-controls">
+                <button id="sortBtn" class="sort-btn">Sort by Price ↓</button>
+              </div>
+            </div>
+
+            <div class="item-list" id="itemList">
+              <div class="no-results"><div class="icon">⏳</div>Loading prices...</div>
+            </div>
+            <div class="pagination" id="pagination"></div>
           </div>
-          <div class="pagination" id="pagination"></div>
         </div>
       </div>
     </div>
@@ -78,25 +244,37 @@
 // ── CONFIG ──
 const PER_PAGE = 15;
 let BANK = [];
+let DEFAULT_SHOP = [];
 let page = 1, filter = 'all', query = '';
 let sortOrder = 'desc'; // 'asc' or 'desc'
+let currentMode = 'sell'; // 'sell' or 'buy'
+let currentSection = 'shop'; // 'shop' or 'gacha'
+let lastShopMode = 'sell'; // Track last shop mode when switching sections
 
-// ── LOAD bank.json ──
-// This just fetches the bank.json sitting next to this file.
-// To update prices: edit bank.json and re-upload. That's it.
-fetch('bank.json')
-  .then(r => {
+// ── LOAD bank.json AND default_shop.json ──
+Promise.all([
+  fetch('bank.json?t=' + Date.now()).then(r => {
     if (!r.ok) throw new Error('Could not load bank.json');
     return r.json();
+  }),
+  fetch('default_shop.json').then(r => {
+    if (!r.ok) throw new Error('Could not load default_shop.json');
+    return r.json();
   })
-  .then(data => {
-    BANK = data.bank;
-    render();
-  })
-  .catch(err => {
-    document.getElementById('itemList').innerHTML =
-      `<div class="no-results"><div class="icon">❌</div>Failed to load bank.json<br><small style="font-size:13px;opacity:0.5">${err.message}</small></div>`;
-  });
+])
+.then(([bankData, shopData]) => {
+  BANK = bankData.bank;
+  DEFAULT_SHOP = shopData.defaultShop;
+  
+  render();
+})
+.catch(err => {
+  const errorElement = document.getElementById('itemList');
+  if (errorElement) {
+    errorElement.innerHTML =
+      `<div class="no-results"><div class="icon">❌</div>Failed to load data<br><small style="font-size:13px;opacity:0.5">${err.message}</small></div>`;
+  }
+});
 
 // ── ITEM IMAGE ──
 // Tries GitHub raw Minecraft assets first, falls back to wiki, then a plain square
@@ -180,7 +358,7 @@ function makeImgEl(itemId) {
         const itemName = name.replace(/_/g, '-').toLowerCase();
         el.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${itemName}.png`;
       } else {
-        el.outerHTML = '<div class="item-icon-fallback">📦</div>';
+        el.outerHTML = '<div class="item-icon-fallback">❓</div>';
       }
     };
   }
@@ -216,7 +394,9 @@ function matchFilter(item, f) {
 
 function getFiltered() {
   const q = query.toLowerCase();
-  let filtered = BANK.filter(item => {
+  let dataSource = currentMode === 'sell' ? BANK : getBuyModeData();
+  
+  let filtered = dataSource.filter(item => {
     const nameMatch = !q || item.item.toLowerCase().includes(q) || formatName(item.item).toLowerCase().includes(q);
     return nameMatch && matchFilter(item, filter);
   });
@@ -229,6 +409,65 @@ function getFiltered() {
   return filtered;
 }
 
+// Convert default shop data to the same format as bank data
+function getBuyModeData() {
+  const buyData = [];
+  DEFAULT_SHOP.forEach(category => {
+    const categoryName = Object.keys(category)[0];
+    const items = category[categoryName];
+    items.forEach(item => {
+      buyData.push({
+        item: item.item,
+        price: item.price,
+        category: categoryName
+      });
+    });
+  });
+  return buyData;
+}
+
+// Update matchFilter to work with buy mode categories
+function matchFilter(item, f) {
+  const [ns, name] = item.item.split(':');
+  
+  // For buy mode, check the category first
+  if (currentMode === 'buy' && item.category) {
+    switch(f) {
+      case 'all': return true;
+      case 'cobble_ball': return item.category === 'Cobble Ball';
+      case 'potions': return item.category === 'Potions';
+      case 'berries': return item.category === 'Berries';
+      case 'gacha': return item.category === 'Gacha';
+      case 'utils': return item.category === 'Utils';
+      case 'mob_drops': return item.category === 'Mob Drops';
+      case 'cards': return item.category === 'Cards';
+      case 'vanilla': return ns === 'minecraft';
+      case 'cobblemon': return ns === 'cobblemon' || ns === 'lumymon';
+      case 'berry': return item.category === 'Berries' || name.includes('berry');
+      case 'health': return item.category === 'Potions' || (ns === 'cobblemon' || ns === 'lumymon') && ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
+      case 'evolution': return (ns === 'cobblemon' || ns === 'lumymon') && ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
+      case 'food': return item.category === 'Food' || ['apple','bread','cake','cookie','pumpkin_pie','cooked','beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical','pufferfish','rotten_flesh','spider_eye','carrot','potato','baked_potato','poisonous','golden_apple','golden_carrot','melon_slice','dried_kelp','beetroot','beetroot_soup','mushroom_stew','suspicious_stew','rabbit_stew'].some(k => name.includes(k));
+      case 'ore': return item.category === 'Ores' || (ns === 'minecraft' && ['_ore','debris','_ingot','_nugget','raw_iron','raw_gold','raw_copper','diamond','emerald','coal','quartz','lapis','redstone','netherite','iron_block','gold_block','emerald_block','diamond_block','coal_block','lapis_block','redstone_block','quartz_block','netherite_block'].some(k => name.includes(k)) && !['stairs','slab','wall','fence','gate','brick','pillar','chiseled','polished','cut','smooth','tile','torch','lamp','horse_armor'].some(k => name.includes(k)));
+      case 'armor_tools': return item.category === 'Armor & Tools' || ['sword','pickaxe','_axe','shovel','_hoe','bow','crossbow','trident','fishing_rod','shears','helmet','chestplate','leggings','boots','shield','elytra','turtle_helmet'].some(k => name.includes(k)) && !name.includes('shell_helmet');
+      default: return true;
+    }
+  }
+  
+  // Original sell mode logic
+  switch(f) {
+    case 'all': return true;
+    case 'vanilla': return ns === 'minecraft';
+    case 'cobblemon': return ns === 'cobblemon' || ns === 'lumymon';
+    case 'berry': return name.includes('berry') && !['candied_berry','berry_sweet','strawberry_sweet'].some(k => name.includes(k));
+    case 'health': return (ns === 'cobblemon' || ns === 'lumymon') && ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
+    case 'evolution': return (ns === 'cobblemon' || ns === 'lumymon') && ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
+    case 'food': return ['apple','bread','cake','cookie','pumpkin_pie','cooked','beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical','pufferfish','rotten_flesh','spider_eye','carrot','potato','baked_potato','poisonous','golden_apple','golden_carrot','melon_slice','dried_kelp','beetroot','beetroot_soup','mushroom_stew','suspicious_stew','rabbit_stew'].some(k => name.includes(k));
+    case 'ore': return ns === 'minecraft' && ['_ore','debris','_ingot','_nugget','raw_iron','raw_gold','raw_copper','diamond','emerald','coal','quartz','lapis','redstone','netherite','iron_block','gold_block','emerald_block','diamond_block','coal_block','lapis_block','redstone_block','quartz_block','netherite_block'].some(k => name.includes(k)) && !['stairs','slab','wall','fence','gate','brick','pillar','chiseled','polished','cut','smooth','tile','torch','lamp','horse_armor'].some(k => name.includes(k));
+    case 'armor_tools': return ['sword','pickaxe','_axe','shovel','_hoe','bow','crossbow','trident','fishing_rod','shears','helmet','chestplate','leggings','boots','shield','elytra','turtle_helmet'].some(k => name.includes(k)) && !name.includes('shell_helmet');
+    default: return true;
+  }
+}
+
 // ── RENDER ──
 function render() {
   const filtered = getFiltered();
@@ -237,6 +476,12 @@ function render() {
   if (page > totalPages) page = 1;
 
   const slice = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+  // Update title based on mode
+  const titleElement = document.querySelector('.shop-title h1');
+  if (titleElement) {
+titleElement.innerHTML = 'COBBLEGAMERS<br>SHOP';
+  }
 
   document.getElementById('statsText').innerHTML =
     `Showing <span>${slice.length}</span> of <span>${total}</span> items`;
@@ -308,6 +553,12 @@ function render() {
   renderPagination(totalPages);
 }
 
+// ── GACHA RENDER ──
+function renderGacha() {
+  // This function is no longer needed as gacha is handled by gacha.js
+  // Keeping for compatibility but can be removed
+}
+
 function renderPagination(totalPages) {
   const pg = document.getElementById('pagination');
   pg.innerHTML = '';
@@ -345,6 +596,132 @@ function renderPagination(totalPages) {
 }
 
 // ── EVENTS ──
+// Main navigation tabs (outside)
+document.querySelectorAll('.main-tab-outside').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const section = tab.dataset.section;
+    currentSection = section;
+    
+    // Update active tab
+    document.querySelectorAll('.main-tab-outside').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    
+    // Update title dynamically
+    const titleElement = document.getElementById('mainTitle');
+    if (titleElement) {
+      if (section === 'shop') {
+        titleElement.innerHTML = 'COBBLEGAMERS<br>SHOP';
+      } else if (section === 'gacha') {
+        titleElement.innerHTML = 'COBBLEGAMERS<br>GACHA';
+      }
+    }
+    
+    // Update body class for color scheme - RESET FIRST
+    document.body.className = '';
+    
+    if (section === 'shop') {
+      // Reapply the last shop mode when returning to shop
+      document.body.classList.add(lastShopMode === 'buy' ? 'buy-mode' : 'sell-mode');
+    } else if (section === 'gacha') {
+      document.body.classList.add('gacha-mode');
+    }
+    
+    // Show/hide sections
+    document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.content-area').forEach(c => c.classList.remove('active'));
+    
+    if (section === 'shop') {
+      document.getElementById('shopSection').classList.add('active');
+      document.getElementById('shopContent').classList.add('active');
+      
+      // Clear ALL gacha tabs when switching to shop
+      document.querySelectorAll('.rarity-tab').forEach(t => t.classList.remove('active'));
+      
+      // Reset shop tabs to last known mode
+      document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
+      if (lastShopMode === 'buy') {
+        document.getElementById('buyPricesTab').classList.add('active');
+        currentMode = 'buy';
+        document.body.classList.remove('sell-mode');
+        document.body.classList.add('buy-mode');
+      } else {
+        document.getElementById('sellPricesTab').classList.add('active');
+        currentMode = 'sell';
+        document.body.classList.remove('buy-mode');
+        document.body.classList.add('sell-mode');
+      }
+      render();
+      
+    } else if (section === 'gacha') {
+      document.getElementById('gachaSection').classList.add('active');
+      
+      // Re-render current gacha type when switching back to gacha
+      if (currentGachaType === 'pokedoll') {
+        renderPokedollGacha();
+      } else if (currentGachaType === 'item') {
+        renderItemGacha();
+      }
+    }
+  });
+});
+
+// Shop sub-tabs - REMOVED to prevent duplicate event listeners
+// Individual event listeners are defined above for buyPricesTab and sellPricesTab
+
+// Update categories based on current mode
+function updateCategories(mode) {
+  const filterTabs = document.getElementById('filterTabs');
+  if (!filterTabs) return;
+  
+  filterTabs.innerHTML = '';
+  
+  if (mode === 'buy') {
+    // Always add "All" tab first
+    const allTab = document.createElement('div');
+    allTab.className = 'tab active';
+    allTab.dataset.filter = 'all';
+    allTab.textContent = 'All';
+    filterTabs.appendChild(allTab);
+    // Then add categories from default_shop.json
+    DEFAULT_SHOP.forEach(category => {
+      const categoryName = Object.keys(category)[0];
+      const tab = document.createElement('div');
+      tab.className = 'tab';
+      tab.dataset.filter = categoryName.toLowerCase().replace(/\s+/g, '_');
+      tab.textContent = categoryName;
+      filterTabs.appendChild(tab);
+    });
+  } else {
+    // Use original sell categories
+    const sellCategories = [
+      { name: 'All', filter: 'all' },
+      { name: 'Vanilla', filter: 'vanilla' },
+      { name: 'Cobblemon', filter: 'cobblemon' },
+      { name: 'Berries', filter: 'berry' },
+      { name: 'Health Items', filter: 'health' },
+      { name: 'Evolutions & Held Items', filter: 'evolution' },
+      { name: 'Food', filter: 'food' },
+      { name: 'Ores', filter: 'ore' },
+      { name: 'Armor & Tools', filter: 'armor_tools' }
+    ];
+    
+    sellCategories.forEach(cat => {
+      const tab = document.createElement('div');
+      tab.className = 'tab';
+      tab.dataset.filter = cat.filter;
+      tab.textContent = cat.name;
+      if (cat.filter === 'all') tab.classList.add('active');
+      filterTabs.appendChild(tab);
+    });
+  }
+  
+  // Reset filter to 'all' when switching modes
+  filter = 'all';
+}
+
+// Initialize with sell mode
+document.body.classList.add('sell-mode');
+
 document.getElementById('search').addEventListener('input', e => {
   query = e.target.value;
   page = 1;
@@ -378,6 +755,32 @@ document.getElementById('sortBtn').addEventListener('click', () => {
   page = 1;
   render();
 });
+
+// Shop tab event listeners
+document.getElementById('buyPricesTab').addEventListener('click', () => {
+  currentMode = 'buy';
+  lastShopMode = 'buy';
+  document.body.classList.remove('sell-mode');
+  document.body.classList.add('buy-mode');
+  document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('buyPricesTab').classList.add('active');
+  page = 1;
+  updateCategories('buy');
+  render();
+});
+
+document.getElementById('sellPricesTab').addEventListener('click', () => {
+  currentMode = 'sell';
+  lastShopMode = 'sell';
+  document.body.classList.remove('buy-mode');
+  document.body.classList.add('sell-mode');
+  document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sellPricesTab').classList.add('active');
+  page = 1;
+  updateCategories('sell');
+  render();
+});
 </script>
+<script src="gacha.js"></script>
 </body>
 </html>
