@@ -413,6 +413,7 @@ function matchFilter(item, f) {
     case 'vanilla': return ns === 'minecraft';
     case 'cobblemon': return ns === 'cobblemon' || ns === 'lumymon';
     case 'berry': return name.includes('berry') && !['candied_berry','berry_sweet','strawberry_sweet'].some(k => name.includes(k));
+    case 'ball': return name.includes('_ball') || name.includes('ball') && (ns === 'cobblemon' || ns === 'lumymon' || ns === 'minecraft');
     case 'health': return (ns === 'cobblemon' || ns === 'lumymon') && ['potion','elixir','ether','revive','antidote','awakening','burn_heal','ice_heal','paralyze','full_heal','restore','heal_powder','revival_herb'].some(k => name.includes(k));
     case 'evolution': return (ns === 'cobblemon' || ns === 'lumymon') && ['stone','_scale','cable','metal_coat','armor','scroll','_apple','_sweet','razor','kings_rock','dragon_scale','electirizer','magmarizer','upgrade','dubious','peat_block','prism','reaper','deep_sea','sachet','whipped','tart','syrupy','cracked_pot','chipped_pot','teacup','augurite','protector','galarica'].some(k => name.includes(k));
     case 'food': return ['apple','bread','cake','cookie','pumpkin_pie','cooked','beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical','pufferfish','rotten_flesh','spider_eye','carrot','potato','baked_potato','poisonous','golden_apple','golden_carrot','melon_slice','dried_kelp','beetroot','beetroot_soup','mushroom_stew','suspicious_stew','rabbit_stew'].some(k => name.includes(k));
@@ -727,7 +728,7 @@ function updateCategories(mode) {
       { name: 'All', filter: 'all' },
       { name: 'Vanilla', filter: 'vanilla' },
       { name: 'Cobblemon', filter: 'cobblemon' },
-      { name: 'PokeBalls', filter: 'pokeballs' },
+      { name: 'PokeBalls', filter: 'ball' },
       { name: 'Berries', filter: 'berry' },
       { name: 'Health Items', filter: 'health' },
       { name: 'Evolutions & Held Items', filter: 'evolution' },
