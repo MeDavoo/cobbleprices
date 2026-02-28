@@ -180,7 +180,7 @@
         },
         {
           "item": "cobbledgacha:gacha_coin",
-          "price": 8250
+          "price": 7500
         },
         {
           "item": "cobbledgacha:gacha_coin_4",
@@ -229,7 +229,7 @@
       ]
     },
     {
-      "Mob Drops": [
+      "Vanilla": [
         {
           "item": "minecraft:egg",
           "price": 250
@@ -268,7 +268,15 @@
         },
         {
           "item": "minecraft:ender_pearl",
-          "price": 1600
+          "price": 1230
+        },
+        {
+          "item": "minecraft:golden_apple",
+          "price": 2500
+        },
+        {
+          "item": "minecraft:enchanted_golden_apple",
+          "price": 9500
         }
       ]
     },
