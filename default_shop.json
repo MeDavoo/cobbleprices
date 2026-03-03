@@ -176,15 +176,15 @@
       "Gacha": [
         {
           "item": "cobbledgacha:gacha_coin_7",
-          "price": 2500
+          "price": 1500
         },
         {
           "item": "cobbledgacha:gacha_coin",
-          "price": 7500
+          "price": 6500
         },
         {
           "item": "cobbledgacha:gacha_coin_4",
-          "price": 10000
+          "price": 8000
         }
       ]
     },
